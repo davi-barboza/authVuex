@@ -4,7 +4,6 @@
      <h4>Registrar usuário</h4>
     <q-form
       @submit.prevent="onSubmit"
-      @reset="onReset"
       class="q-gutter-md"
     >
       <q-input
@@ -88,12 +87,6 @@ export default {
             this.notifyNegative(error.response.data.message);
           });
       }
-    },
-
-    onReset() {
-      this.name = null;
-      this.age = null;
-      this.accept = false;
     },
 
     notifyPositive() {

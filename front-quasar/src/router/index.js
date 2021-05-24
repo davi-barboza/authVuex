@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import routes from './routes';
-// import Provider from '../providers/provider';
 import api from '../services/api';
+import routes from './routes';
+import Provider from '../providers/provider';
 
 Vue.use(VueRouter);
 Vue.prototype.$api = api;
@@ -17,10 +17,11 @@ Vue.prototype.$api = api;
  * with the Router instance.
  */
 
-export default (/* { store, ssrContext } */) => {
+export default function (/* { store, ssrContext } */) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
+    state: Provider,
 
     // Leave these as they are and change in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
@@ -30,4 +31,4 @@ export default (/* { store, ssrContext } */) => {
   });
 
   return Router;
-};
+}

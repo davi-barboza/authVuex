@@ -3,8 +3,7 @@
    <div class="q-pa-md" style="max-width: 400px">
      <h4>Login</h4>
     <q-form
-      @submit.prevent="onSubmit"
-      @reset="onReset"
+      @submit="onSubmit"
       class="q-gutter-md"
     >
 
@@ -39,7 +38,6 @@
 
       <div class="flex justify-between">
         <q-btn label="Submit" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
       </div>
     </q-form>
 
@@ -61,21 +59,18 @@ export default {
 
   methods: {
     onSubmit() {
-      // this.$api.post('auth/login', this.user)
-      //   .then((res) => {
-      //     this.notifyPositive();
-      //     localStorage.setItem('token', res.data.access_token);
-      //     this.$router.push('/dashboard');
-      //   })
-      //   .catch((error) => {
-      //     this.notifyNegative(error.response.data.message);
-      //   });
-      console.log(this.data);
-    },
-
-    onReset() {
-      this.email = null;
-      this.password = null;
+      this.$api.post('auth/login', this.user)
+        .then((res) => {
+          this.$store.commit('DEFINIR_USUARIO_LOGADO', {
+            token: res.data.access_token,
+            user: res.data.user,
+          });
+          this.$router.push('/dashboard');
+        })
+        .catch((error) => {
+          // this.notifyNegative(error.response.data);
+          console.log(error);
+        });
     },
 
     notifyPositive() {
